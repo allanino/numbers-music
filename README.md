@@ -24,7 +24,7 @@ This reproduces the music I've setted in this YouTube video: [https://www.youtub
 
 ### Pi Euler binary madness
 
-http://allanino.me/numbers-music/?tracks=[{"number":"pi","base":2,"speed":"0.10","map":[48,60],"instrument":"pluck"},{"number":"euler","base":2,"speed":"0.10","map":[48,55],"instrument":"pluck"}]
+http://allanino.me/numbers-music/?tracks=[{"number":"pi","base":2,"speed":0.10,"map":[48,60],"instrument":"pluck"},{"number":"euler","base":2,"speed":0.10,"map":[48,55],"instrument":"pluck"}]
 
 ### Oh Suzanna
 
