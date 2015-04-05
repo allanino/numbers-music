@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!-- Bootstrap -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Inconsolata">
+
+        <title>Numbers Music!</title>
+        <link rel="shortcut icon" href="favicon.ico" />
+        <script src="js/timbre.js"></script>
+        <script src="numbers-sound.js"></script>
+
+        <style>
+          html {
+            margin: 10px 20px 10px 20px;
+          }
+            .glyphicon:hover {
+                color: #46c6e2;
+            }
+            .glyphicon-play {
+                font-size: 32px;
+            }
+            .glyphicon-share {
+                font-size: 24px;
+            }
+            .glyphicon-trash {
+                font-size: 24px;
+                margin-left: 20px;
+                margin-left: 10px;
+            }
+            .glyphicon-trash:hover {
+                color: #F87A54;
+            }
+            .glyphicon-stop {
+                font-size: 32px;
+            }
+	        .glyphicon-music {
+                font-size: 32px;
+            }
+          .glyphicon-chevron-up {
+                font-size: 10px;
+            }
+          .glyphicon-chevron-down {
+                font-size: 10px;
+            }
+      		.spinner {
+      		  width: 75px;
+      		}
+      		.spinner input {
+      		  text-align: right;
+      		}
+      		.input-group-btn-vertical {
+      		  position: relative;
+      		  white-space: nowrap;
+      		  width: 1%;
+      		  vertical-align: middle;
+      		  display: table-cell;
+      		}
+      		.input-group-btn-vertical > .btn {
+      		  display: block;
+      		  float: none;
+      		  width: 100%;
+      		  max-width: 100%;
+      		  padding: 8px;
+      		  margin-left: 0px;
+      		  position: relative;
+      		  border-radius: 0;
+      		}
+      		.input-group-btn-vertical > .btn:first-child {
+      		  border-top-right-radius: 4px;
+      		}
+      		.input-group-btn-vertical > .btn:last-child {
+      		  margin-top: -2px;
+      		  border-bottom-right-radius: 4px;
+      		}
+      		.input-group-btn-vertical span{
+      		  position: absolute;
+      		  top: 0;
+      		  left: 4px;
+      		}
+          .track {
+              position: relative;
+              margin: 0px 50px 10px 0px;
+              padding: 5px;
+              border-color: #e5e5e5 #eee #eee;
+              border-style: solid;
+              border-width: 1px 1px 1px 1px;
+              -webkit-box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+              box-shadow: inset 0 3px 6px rgba(0,0,0,.05);
+              display:inline-block;
+          }
+
+          .number-display {
+                  font-family: 'Inconsolata monospace';
+                  width: 250px;
+                  background-color: black;
+                  font-size: 32px;
+                  color: #dddddd;
+              }
+          .highlight {
+            color: #46c6e2;
+            white-space: pre;
+          }
+          .before {
+            padding-left: 5px;
+            white-space: pre;
+          }
+          .after {
+            white-space: pre;
+          }
+          #number {
+                width: 75px;
+              }
+          .btn-large {
+            margin: 0px 10px 10px 0px;
+          }
+          .piano {
+            display:inline-block;
+            position: relative;
+
+          }
+          .white-key {
+            position: absolute;
+            float: left;
+            border-left-style: solid;
+            border-top-style: solid;
+            border-bottom-style: solid;
+          }
+          .white-key:hover {
+            background-color: #46c6e2;
+          }
+          .black-key:hover {
+            background-color: #46c6e2;
+          }
+
+          .black-key {
+            position: absolute;
+            background-color: black;
+            float: left;
+            border-style: solid;
+          }
+
+          .modal-body {
+            display:inline-block;
+          }
+          #message {
+            margin-top: 10px;
+          }
+          #number-modal textarea{
+            width:100%;
+          }
+        </style>
+    </head>
+
+    <body>
+      <a href="https://github.com/allanino/numbers-music"><img style="position: absolute; top: 0; right: 0; border: 0; width: 149px; height: 149px;" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-cerulean@2x.png" alt="Fork me on GitHub"></a>
+
+      <h1>Numbers music!</h1>
+
+          <!-- Main page layout. Single column table with multiple rows -->
+          <table id="main-table" style="width:100%">
+            <tr>
+              <button type="button" class="btn btn-large btn-primary" onclick="insertTrack()">Insert track</button>
+              <button type="button" class="btn btn-large btn-success" onclick="playAll()">Play all</button>
+              <button type="button" class="btn btn-large btn-danger" onclick="stopAll()">Stop all</button>
+              <button type="button" class="btn btn-large btn-default" onclick="shareAll()">Share all</button>
+            </tr>
+          </table>
+
+          <!-- Container to put URLs to share tracks -->
+          <div class="modal fade" id="url-modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      <script>
+      // Counter for how many tracks we have
+      var countTracks = 0;
+
+      // Setup a track, creating all event listeners and initial configuration
+      function setupTrack(track, number, base, speed, map, instrument){
+        if (typeof(number)==='undefined' || number === null) number = "pi";
+        if (typeof(base)==='undefined' || base === null) base = 10;
+        if (typeof(speed)==='undefined'  || speed === null) speed = 0.3;
+        if (typeof(map)==='undefined' || map === null) map = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
+        if (typeof(instrument)==='undefined' || instrument === null) instrument = "pluck";
+
+        // See if its custom number passed to track
+        if(!(number == 'pi' || number == 'euler' || number == 'tau' || number == 'phi')){
+          base = getBase(number);
+          if(base === null){
+            alert('Invalid number passed in URL.');
+          };
+          // Create an entry for it in our constants hash
+          constants['custom'][base] = number;
+
+          // Set custom number textarea
+          track.find('#number-modal textarea').val(number);
+          // Set it as custom number;
+          number = 'custom';
+
+          // Disable base selection
+          track.find('#base input').prop( "disabled", true);
+        }
+
+        // Set initial number
+        track.prop("number", number);
+        // Set default base
+        track.prop("base", base);
+        // Set default speed
+        track.prop("speed", speed);
+        // Set default map
+        track.prop("map", map);
+        // Set default instrument
+        track.prop("instrument", instrument);
+
+        // Set number display
+        var num_string = constants[number][base].split('.').join("");
+        track.find(".number-display .before").text("       ");
+        track.find(".number-display .highlight").text(num_string[0]);
+        track.find(".number-display .after").text(num_string.slice(1, 8));
+
+        track.find('#base').find('input').val(base);
+        track.find('#speed').find('input').val(speed);
+        track.find('#number').val(number);
+        track.find('#instrument').val(instrument);
+
+        // Select number
+        track.find('#number').on('change', function(){
+           var number = $(this).find("option:selected").val();
+           // Set number porperty
+           track.prop("number", number);
+
+           if(number == 'custom'){
+             // If custom, disable base selection. We find that from the input.
+             track.find('#base input').prop( "disabled", true);
+             track.find('#number-modal').modal('show');
+           } else {
+             // If not custom, enable base selection.
+             track.find('#base input').prop( "disabled", false);
+             // Get base
+             var base = track.prop("base");
+
+             // Update displayed number
+             var num_string = constants[number][base].split('.').join("");
+             track.find(".number-display .before").text("       ");
+             track.find(".number-display .highlight").text(num_string[0]);
+             track.find(".number-display .after").text(num_string.slice(1, 8));
+           }
+         });
+
+         // Handle custom number modal setting
+         track.find('#number-modal .btn').on('click', function(){
+           // Set number
+           var number = track.find('#number-modal textarea').val().split('.').join("");
+           // Get base from number
+           var base = getBase(number);
+           // Test if base is valid
+           if(base === null){
+             var error_message = '<div class="alert alert-danger"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Invalid number!</strong> Please, use only digits in set {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, b}</div>'
+             track.find('#number-modal #message').html(error_message);
+             return false;
+           }
+
+           // Update constants with new number
+           constants['custom'][base] = number;
+
+           // Compute new map, but only if base changed
+           if(base !=  track.prop("base")){
+             // Compute chromatic map with selected notes. If base n: map = 48 + [0, 1, ..., n-1]
+             var map = [];
+             for(var i = 0; i < base; i++){
+               map.push(48 + i);
+             }
+             track.prop("map", map);
+           };
+
+           // Set base computed for input number
+           track.prop("base", base);
+           
+           // Set base in spinner
+           track.find('#base input').val(base);
+
+           // Update displayed number
+           track.find(".number-display .before").text("       ");
+           track.find(".number-display .highlight").text(number[0]);
+           track.find(".number-display .after").text(number.slice(1, 8));
+
+           // Hide modal if everything went fine.
+           track.find('#number-modal').modal('hide');
+         });
+
+        // Base selection up
+        track.find('#base').parent().find('.spinner .btn:first-of-type').on('click', function() {
+              var base = parseInt($(this).parent().parent().find('input').val(), 10) + 1;
+               if(base > 12){base = 12};
+              $(this).parent().parent().find('input').val(base);
+              track.prop("base", base);
+
+              // Compute chromatic map with selected notes. If base n: map = 48 + [0, 1, ..., n-1]
+              var map = [];
+              for(var i = 0; i < base; i++){
+                map.push(48 + i);
+              }
+              track.prop("map", map);
+
+              // Get constant we are going to listen
+              var number = track.prop("number");
+              var num_string = constants[number][base].split('.').join("");
+              track.find(".number-display .before").text("       ");
+              track.find(".number-display .highlight").text(num_string[0]);
+              track.find(".number-display .after").text(num_string.slice(1, 8));
+          });
+
+          // Base selection down
+          track.find('#base').parent().find('.spinner .btn:last-of-type').on('click', function() {
+          var base = parseInt($(this).parent().parent().find('input').val(), 10) - 1;
+               if(base < 2){base = 2};
+              $(this).parent().parent().find('input').val(base);
+              track.prop("base", base);
+              // Compute chromatic map with selected notes. If base n: map = [0, 1, ..., n-1]
+              var map = [];
+              for(var i = 0; i < base; i++){
+                map.push(48 + i);
+              }
+              track.prop("map", map);
+
+              // Get constant we are going to listen
+              var number = track.prop("number");
+              var num_string = constants[number][base].split('.').join("");
+              track.find(".number-display .before").text("       ");
+              track.find(".number-display .highlight").text(num_string[0]);
+              track.find(".number-display .after").text(num_string.slice(1, 8));
+          });
+
+          // Speed selection up
+          track.find('#speed').parent().find('.spinner .btn:first-of-type').on('click', function() {
+                var speed = parseFloat($(this).parent().parent().find('input').val()) + 0.05;
+                 if(speed > 2){speed = 2};
+                $(this).parent().parent().find('input').val(speed.toFixed(2));
+
+                track.prop("speed", speed);
+          });
+
+          // Speed selection down
+          track.find('#speed').parent().find('.spinner .btn:last-of-type').on('click', function() {
+                var speed = parseFloat($(this).parent().parent().find('input').val()) - 0.05;
+                 if(speed < 0.05){speed = 0.05};
+                $(this).parent().parent().find('input').val(speed.toFixed(2));
+
+                track.prop("speed", speed);
+          });
+
+          // Select instrument
+          track.find('#instrument').on('change', function(){
+             var instrument = $(this).find("option:selected").val();
+             // Set instrument
+             track.prop("instrument", instrument);
+           });
+
+           // Show modal with notes mapping
+           track.find('#notes-mapping').on('click', function(){
+             // We populate it here to always show updated information
+             populateModal(track); // This function is defined below
+             track.find('#notes-mapping-modal').modal('show');
+           });
+
+          // Create link if clicked on share
+          track.find('.glyphicon-share').on('click', function(){
+            var data = [{"number:": track.prop("number"),
+                        "base": track.prop("base"),
+                        "speed": track.prop("speed"),
+                        "map": track.prop("map"),
+                        "instrument": track.prop("instrument")}];
+
+            var url = 'http://'+window.location.host+'/index.html?tracks=' + JSON.stringify(data);
+            var body = "<p>Copy the link below to share your track:</p><a href='" + url + "'>" + url + "</a>"
+            $('#url-modal .modal-body').html(body);
+            $('#url-modal').modal('show');
+          });
+
+          // Delete track if clicked on trash
+         track.find('.glyphicon-trash').on('click', function(){
+           countTracks--;
+           track.parent().remove();
+         });
+
+          // Play music
+          track.find('.glyphicon-play').on('click', function(){
+              if(!$(this).parent().prop("playing")){
+                  // Disable controls
+                  track.find('select').prop( "disabled", true);
+                  track.find('#base input').prop( "disabled", true);
+                  track.find('#speed input').prop( "disabled", true);
+                  track.find('button').prop( "disabled", true);
+                  track.find('#notes-mapping').prop( "disabled", true);
+                  track.find('#notes-mapping').css( "color", "gray");
+
+                  // Start playing
+                  var number = track.prop("number");
+                  var base = track.prop("base");
+                  var speed = track.prop("speed");
+                  var instrument = track.prop("instrument");
+                  var map = track.prop("map");
+                  var synth = play(number, base, map, speed, instrument, track.find('.number-display'));
+                  $(this).parent().prop("synth", synth);
+                  $(this).parent().prop("playing", true);
+              }
+          });
+
+          //Stop music
+          track.find('.glyphicon-stop').on('click', function(){
+              if($(this).parent().prop("playing")){
+                var number = track.prop("number");
+                var base = track.prop("base");
+                if(number != 'custom'){
+                  track.find('#base input').prop( "disabled", false);
+                };
+                track.find('select').prop( "disabled", false);
+                track.find('#speed input').prop( "disabled", false);
+                track.find('button').prop( "disabled", false);
+                track.find('#notes-mapping').prop( "disabled", false);
+                track.find('#notes-mapping').css( "color", "black");
+
+                $(this).parent().prop("synth")['playing'] = false;
+                $(this).parent().prop("playing", false);
+
+                // Update displayed number
+                var num_string = constants[number][base].split('.').join("");
+                track.find(".number-display .before").text("       ");
+                track.find(".number-display .highlight").text(num_string[0]);
+                track.find(".number-display .after").text(num_string.slice(1, 8));
+              }
+          });
+      };
+
+      // Get base of number. It founds a minimal base necessary to fit digits
+      // Ex: 123312 -> base 4; aaabb -> base 12; 10 -> base 2
+      function getBase(number){
+       if(number.length < 1) {return null};
+
+       var count_digits = {'0': 0, '1': 0, '2': 0, '3': 0, '4': 0, '5': 0,
+                            '6': 0, '7': 0, '8': 0, '9': 0, 'a': 0, 'b': 0};
+       for(var i = 0; i < number.length; i++){
+         count_digits[number[i]]++;
+       }
+       // See if we have some Nan, in which case the input is invalid
+       for (var key in count_digits) {
+         if(isNaN(count_digits[key])){
+           return null;
+         }
+       };
+
+       if(count_digits['b'] > 0) {return 12};
+       if(count_digits['a'] > 0) {return 11};
+       if(count_digits['9'] > 0) {return 10};
+       if(count_digits['8'] > 0) {return 9};
+       if(count_digits['7'] > 0) {return 8};
+       if(count_digits['6'] > 0) {return 7};
+       if(count_digits['5'] > 0) {return 6};
+       if(count_digits['4'] > 0) {return 5};
+       if(count_digits['3'] > 0) {return 4};
+       if(count_digits['2'] > 0) {return 3};
+       return 2;
+      };
+
+      // Generate a html string containing a piano keyboard of given height in pixels
+      function stringPiano(height){
+        var white_height = height;
+        var black_height = height*2/3;
+        var white_width = Math.ceil(white_height/6);
+        var black_width = Math.ceil(black_height/6);
+        var octaves = 3;
+        var piano = '<div class="piano" style="width:' + 3*7*white_width + 'px; height:' + height +'px;">';
+
+        // Insert white keys
+        var note = 35;
+        for(var i = 0; i < 7*octaves - 1; i++){
+          // Add a semitone when going B->C or E->F and a tone else
+          if(i % 7 == 0 || i % 7 == 3){
+            note += 1;
+          } else {
+            note += 2;
+          }
+          piano += '<div class="white-key" id="' + note + '" style="left: ' + i*white_width + 'px; height:' + white_height +'px; width:' + white_width + 'px;"></div>'
+        }
+        // Insert last white key, with right border.
+        note += 2;
+        piano += '<div class="white-key" id="' + note + '" style="border-right-style: solid; left: ' + (7*octaves - 1)*white_width + 'px; height:' + white_height +'px; width:' + white_width + 'px;"></div>'
+
+        // Insert black keys
+        note = 34;
+        for(var i = 0; i < 7*octaves; i++){
+          // Don't have black keys between E and F or B and C
+          if(i % 7 != 2 && i % 7 != 6){
+            // Add three semitone when going D#->F# or A#->C# and a tone else
+            if(i % 7 == 0 || i % 7 == 3){
+              note += 3;
+            } else {
+              note += 2;
+            }
+            piano += '<div class="black-key" id="' + note + '" style="left: ' + (i*white_width + black_width) + 'px; height:' + black_height +'px; width:' + black_width + 'px;"></div>'
+          }
+        }
+        piano += '</div>';
+
+        return piano;
+      };
+
+      // Put piano keyboards on modal body table
+      function populateModal(track){
+        var base = track.prop("base");
+
+        //Body is a table with one row per digit and one keyboard per row
+        var modalBody = '<table class="table"><thead><th id="digit">Digit</th><th id="note">Note</th>';
+        modalBody += '</thead><tbody>';
+
+        for(var i = 0; i < base; i++){
+          modalBody += '<tr><td id="' + i + '" headers="digit">' + i + '</td>';
+          modalBody += '<td headers="note"><div id="piano-' +i + '">' + stringPiano(120) + '</div></td></tr>';
+        }
+        modalBody += '</tbody></table>';
+        track.find('#notes-mapping-modal .modal-body').html(modalBody);
+
+        // Paint mapped keys in yellow
+        track.prop('map').forEach(function(note, digit){
+          track.find('#piano-' + digit + ' #' + note).css('background-color', 'yellow');
+        });
+
+        // Set event when a keyboard key is clicked on
+        track.find('div[class*=-key]').on('click',function(){
+          // Get digit. Each piano is inside a div with id: piano-digit
+          var digit = parseInt($(this).parent().parent().attr('id').split('-')[1]);
+          var note = parseInt($(this).attr('id'));
+
+          // Play selected note
+          playSample(note);
+
+          // Unset color of previous clicked key
+          var old_key = $(this).parent().find('#' + track.prop("map")[digit]);
+          var old_original_color = old_key.attr('class').split('-')[0]; // Class is color-key
+          old_key.css('background-color', old_original_color);
+
+          if(track.prop("map")[digit] == note){
+            // Map digit to pause (we set it to a really low note)
+            track.prop("map")[digit] = 0;
+          } else {
+            // Map digit to clicked note
+            track.prop("map")[digit] = note;
+            // Set color of clicked key to yellow
+            $(this).css('background-color', 'yellow');
+          }
+        });
+      };
+
+      // Buttons function
+      function insertTrack(number, base, speed, map, instrument){
+        // Inject HTML for a new track as a new line in our main table
+        // and setup it (event handlers, custom elements and so on)
+        $.get('include/track.html', function(data) {
+          $('#main-table').append($('<tr>').append(data));
+          setupTrack($(".track").last(), number, base, speed, map, instrument);
+        });
+      }
+
+      function playAll(){
+        $(".track").each(function(){
+          $(this).find('.glyphicon-play').click();
+        });
+      }
+
+      function stopAll(){
+        $(".track").each(function(){
+          $(this).find('.glyphicon-stop').click();
+        });
+      }
+
+      function shareAll(){
+        var data = [];
+        $(".track").each(function(){
+          var track_data = {"number:": $(this).prop("number"),
+                            "base": $(this).prop("base"),
+                            "speed": $(this).prop("speed"),
+                            "map": $(this).prop("map"),
+                            "instrument": $(this).prop("instrument")};
+          data.push(track_data);
+        });
+
+        var url = 'http://'+window.location.host+'/index.html?tracks=' + JSON.stringify(data);
+        var body = "<p>Copy the link below to share your tracks:</p><a href='" + url + "'>" + url + "</a>"
+        $('#url-modal .modal-body').html(body);
+        $('#url-modal').modal('show');
+      }
+      // Helper function to parse URL parameters
+      function getURLParameter(name) {
+          return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+      }
+
+      // Get URL parameters and insert initial tracks defined there
+      function createFirstTracks(){
+        var url_string = getURLParameter('tracks');
+        var url_data = JSON.parse(url_string);
+        if(url_data === null){
+          insertTrack();
+        } else {
+          url_data.forEach(function(data){
+            insertTrack(data.number, data.base, data.speed, data.map, data.instrument);
+          });
+        }
+      }
+
+      $(function() {
+        // Create first track (or tracks, if given URL)
+        createFirstTracks();
+      });
+      </script>
+    </body>
+</html>

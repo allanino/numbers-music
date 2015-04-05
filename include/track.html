@@ -1,0 +1,105 @@
+<div class="form-inline track">
+    <div class="form-group">
+        <span class="glyphicon glyphicon-play"></span>
+        <span class="glyphicon glyphicon-stop"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="number" class="control-label">Constant</label>
+        <select id="number" class="form-control">
+            <option value="pi">&pi;</option>
+            <option value="tau">&tau;</option>
+            <option value="euler">e</option>
+            <option value="phi">&phi;</option>
+            <option value="custom">custom</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+     <label for="base" class="control-label">Base</label>
+     <div id="base" class="input-group spinner">
+        <input type="text" class="form-control" value="10">
+        <div class="input-group-btn-vertical">
+          <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-up"></span></button>
+          <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+     <label for="speed" class="control-label">Speed</label>
+     <div id="speed" class="input-group spinner">
+        <input type="text" class="form-control" value="0.25">
+        <div class="input-group-btn-vertical">
+          <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-up"></span></button>
+          <button class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span></button>
+        </div>
+      </div>
+    </div>
+
+  <div class="form-group">
+    <label for="notes-mapping" class="control-label">Notes</label>
+    <span id="notes-mapping" class="input-group glyphicon glyphicon-music"></span>
+  </div>
+
+
+  <div class="form-group">
+      <label for="instrument" class="control-label">Instrument</label>
+      <select id="instrument" class="form-control">
+          <option value="pluck">Pluck</option>
+          <option value="perc">Percussion</option>
+          <option value= "synth-1">Synth 1</option>
+          <option value="sin">Sine</option>
+          <option value="square">Square</option>
+          <option value="tri">Triangle</option>
+          <option value="saw">Saw</option>
+      </select>
+  </div>
+
+    <div class="form-group number-display">
+      <span class="before"></span><span class="highlight"></span><span class="after"></span>
+    </div>
+
+    <div class="modal fade" id="notes-mapping-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Map digits to musical notes</h4>
+          </div>
+          <div class="modal-body">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="number-modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="custom-number">Your number:</label>
+              <textarea class="form-control" rows="3" id="custom-number"></textarea>
+            </div>
+            <div id="message">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="form-group">
+        <span class="glyphicon glyphicon-share"></span>
+    </div>
+
+    <div class="form-group">
+        <span class="glyphicon glyphicon-trash"></span>
+    </div>
+
+
+</div>
