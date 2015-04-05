@@ -302,7 +302,7 @@
 
            // Set base computed for input number
            track.prop("base", base);
-           
+
            // Set base in spinner
            track.find('#base input').val(base);
 
@@ -392,7 +392,7 @@
 
           // Create link if clicked on share
           track.find('.glyphicon-share').on('click', function(){
-            var data = [{"number:": track.prop("number"),
+            var data = [{"number": track.prop("number"),
                         "base": track.prop("base"),
                         "speed": track.prop("speed"),
                         "map": track.prop("map"),
@@ -603,7 +603,7 @@
       function shareAll(){
         var data = [];
         $(".track").each(function(){
-          var track_data = {"number:": $(this).prop("number"),
+          var track_data = {"number": $(this).prop("number"),
                             "base": $(this).prop("base"),
                             "speed": $(this).prop("speed"),
                             "map": $(this).prop("map"),
