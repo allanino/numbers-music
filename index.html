@@ -394,7 +394,7 @@
           track.find('.glyphicon-share').on('click', function(){
             var data = [{"number": track.prop("number"),
                         "base": track.prop("base"),
-                        "speed": track.prop("speed").toFixed(2),
+                        "speed": track.prop("speed"),
                         "map": track.prop("map"),
                         "instrument": track.prop("instrument")}];
 
@@ -605,7 +605,7 @@
         $(".track").each(function(){
           var track_data = {"number": $(this).prop("number"),
                             "base": $(this).prop("base"),
-                            "speed": $(this).prop("speed").toFixed(2),
+                            "speed": $(this).prop("speed"),
                             "map": $(this).prop("map"),
                             "instrument": $(this).prop("instrument")};
           data.push(track_data);
