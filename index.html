@@ -229,7 +229,7 @@
         // Set default base
         track.prop("base", base);
         // Set default speed
-        track.prop("speed", speed.toFixed(2));
+        track.prop("speed", parseFloat(speed.toFixed(2)));
         // Set default map
         track.prop("map", map);
         // Set default instrument
@@ -360,7 +360,7 @@
                  if(speed > 2){speed = 2};
                 $(this).parent().parent().find('input').val(speed.toFixed(2));
 
-                track.prop("speed", speed.toFixed(2));
+                track.prop("speed", parseFloat(speed.toFixed(2)));
           });
 
           // Speed selection down
@@ -369,7 +369,7 @@
                  if(speed < 0.05){speed = 0.05};
                 $(this).parent().parent().find('input').val(speed.toFixed(2));
 
-                track.prop("speed", speed.toFixed(2));
+                track.prop("speed", parseFloat(speed.toFixed(2)));
           });
 
           // Select instrument
