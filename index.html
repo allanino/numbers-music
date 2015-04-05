@@ -398,7 +398,7 @@
                         "map": track.prop("map"),
                         "instrument": track.prop("instrument")}];
 
-            var url = 'http://'+window.location.host+'/index.html?tracks=' + JSON.stringify(data);
+            var url = 'http://'+window.location.host+'/numbers-music/?tracks=' + JSON.stringify(data);
             var body = "<p>Copy the link below to share your track:</p><a href='" + url + "'>" + url + "</a>"
             $('#url-modal .modal-body').html(body);
             $('#url-modal').modal('show');
@@ -611,7 +611,7 @@
           data.push(track_data);
         });
 
-        var url = 'http://'+window.location.host+'/index.html?tracks=' + JSON.stringify(data);
+        var url = 'http://'+window.location.host+'/numbers-music/?tracks=' + JSON.stringify(data);
         var body = "<p>Copy the link below to share your tracks:</p><a href='" + url + "'>" + url + "</a>"
         $('#url-modal .modal-body').html(body);
         $('#url-modal').modal('show');
