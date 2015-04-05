@@ -12,7 +12,7 @@ We just need to have it's representations from base 2 to 12 with 2048 digits eac
 ### Pi in base 12 mapped to a chromatic scale
 
 [http://allanino.me/index.html?tracks=[{"number:":"pi","base":12,"speed":0.2,"map":[48,49,50,51,52,53,54,55,56,57,58,59],"instrument":"pluck"}]](http://allanino.me/index.html?tracks=[{"number:":"pi","base":12,"speed":0.2,"map":[48,49,50,51,52,53,54,55,56,57,58,59],"instrument":"pluck"}])
-]
+
 This reproduces the music I've setted in this YouTube video: [https://www.youtube.com/watch?v=eP3_NioYP5U](https://www.youtube.com/watch?v=eP3_NioYP5U)
 
 
