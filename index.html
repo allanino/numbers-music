@@ -364,7 +364,7 @@
                  if(speed > 2){speed = 2};
                 $(this).parent().parent().find('input').val(speed.toFixed(2));
 
-                track.prop("speed", speed);
+                track.prop("speed", speed.toFixed(2));
           });
 
           // Speed selection down
@@ -373,7 +373,7 @@
                  if(speed < 0.05){speed = 0.05};
                 $(this).parent().parent().find('input').val(speed.toFixed(2));
 
-                track.prop("speed", speed);
+                track.prop("speed", speed.toFixed(2));
           });
 
           // Select instrument
