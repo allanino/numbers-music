@@ -125,8 +125,7 @@ function play(constant, base, map, speed, instrument, textElement){
         var synth = T("PluckGen", {env:env, mul:0.25}).play();
         break;
       case 'perc':
-        var msec  = timbre.timevalue("bpm120 l8");
-        var synth = T("OscGen", {env:T("perc", {r:msec, ar:true})}).play();
+        var synth = T("OscGen", {env:T("perc", {r:speed*10000/10, ar:true})}).play();
         break;
       case 'synth-1':
         var osc = T("pulse");
