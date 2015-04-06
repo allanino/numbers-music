@@ -555,18 +555,20 @@
           var digit = parseInt($(this).parent().parent().attr('id').split('-')[1]);
           var note = parseInt($(this).attr('id'));
 
-          // Play selected note
-          playSample(note);
-
-          // Unset color of previous clicked key
-          var old_key = $(this).parent().find('#' + track.prop("map")[digit]);
-          var old_original_color = old_key.attr('class').split('-')[0]; // Class is color-key
-          old_key.css('background-color', old_original_color);
+          // If digit is not 0, some key was setted. So we unset its color.
+          if(track.prop("map")[digit] != 0){
+              var old_key = $(this).parent().find('#' + track.prop("map")[digit]);
+              var old_original_color = old_key.attr('class').split('-')[0]; // Class is color-key
+              old_key.css('background-color', old_original_color);
+          }
 
           if(track.prop("map")[digit] == note){
             // Map digit to pause (we set it to a really low note)
             track.prop("map")[digit] = 0;
           } else {
+            // Play selected note
+            playSample(note);
+
             // Map digit to clicked note
             track.prop("map")[digit] = note;
             // Set color of clicked key to yellow
