@@ -164,6 +164,9 @@
           #number-modal textarea{
             width:100%;
           }
+          .notes-mapping {
+              color: gray;
+          }
         </style>
     </head>
 
@@ -416,7 +419,7 @@
                   track.find('#speed input').prop( "disabled", true);
                   track.find('button').prop( "disabled", true);
                   track.find('#notes-mapping').prop( "disabled", true);
-                  track.find('#notes-mapping').css( "color", "gray");
+                  track.find('#notes-mapping').addClass("notes-mapping");
 
                   // Start playing
                   var number = track.prop("number");
@@ -442,7 +445,7 @@
                 track.find('#speed input').prop( "disabled", false);
                 track.find('button').prop( "disabled", false);
                 track.find('#notes-mapping').prop( "disabled", false);
-                track.find('#notes-mapping').css( "color", "black");
+                track.find('#notes-mapping').removeClass("notes-mapping");
 
                 $(this).parent().prop("synth")['playing'] = false;
                 $(this).parent().prop("playing", false);
