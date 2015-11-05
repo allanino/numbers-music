@@ -468,8 +468,13 @@
       function shareAll(){
         var data = [];
         $(".track").each(function(){
-          var track_data = {"number": $(this).prop("number"),
-                            "base": $(this).prop("base"),
+          var number = $(this).prop("number");
+          var base = $(this).prop("base");
+          if(number == "custom"){
+            number = $(this).find('#number-modal textarea').val();
+          }
+          var track_data = {"number": number,
+                            "base": base,
                             "speed": $(this).prop("speed"),
                             "map": $(this).prop("map"),
                             "instrument": $(this).prop("instrument")};
