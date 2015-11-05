@@ -69,7 +69,7 @@
       function setupTrack(track, number, base, speed, map, instrument){
         if (typeof(number)==='undefined' || number === null) number = "pi";
         if (typeof(base)==='undefined' || base === null) base = 10;
-        if (typeof(speed)==='undefined'  || speed === null) speed = 0.3;
+        if (typeof(speed)==='undefined'  || speed === null) speed = 5.0;
         if (typeof(map)==='undefined' || map === null) map = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59];
         if (typeof(instrument)==='undefined' || instrument === null) instrument = "pluck";
 
@@ -96,7 +96,7 @@
         // Set default base
         track.prop("base", base);
         // Set default speed
-        track.prop("speed", parseFloat(speed.toFixed(2)));
+        track.prop("speed", parseFloat(speed.toFixed(1)));
         // Set default map
         track.prop("map", map);
         // Set default instrument
@@ -223,20 +223,20 @@
 
           // Speed selection up
           track.find('#speed').parent().find('.spinner .btn:first-of-type').on('click', function() {
-                var speed = parseFloat($(this).parent().parent().find('input').val()) + 0.05;
-                 if(speed > 2){speed = 2};
-                $(this).parent().parent().find('input').val(speed.toFixed(2));
+                var speed = parseFloat($(this).parent().parent().find('input').val()) + 0.5;
+                 if(speed > 20){speed = 20};
+                $(this).parent().parent().find('input').val(speed.toFixed(1));
 
-                track.prop("speed", parseFloat(speed.toFixed(2)));
+                track.prop("speed", parseFloat(speed.toFixed(1)));
           });
 
           // Speed selection down
           track.find('#speed').parent().find('.spinner .btn:last-of-type').on('click', function() {
-                var speed = parseFloat($(this).parent().parent().find('input').val()) - 0.05;
-                 if(speed < 0.05){speed = 0.05};
-                $(this).parent().parent().find('input').val(speed.toFixed(2));
+                var speed = parseFloat($(this).parent().parent().find('input').val()) - 0.5;
+                 if(speed < 0.5){speed = 0.5};
+                $(this).parent().parent().find('input').val(speed.toFixed(1));
 
-                track.prop("speed", parseFloat(speed.toFixed(2)));
+                track.prop("speed", parseFloat(speed.toFixed(1)));
           });
 
           // Select instrument

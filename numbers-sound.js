@@ -121,15 +121,15 @@ function play(constant, base, map, speed, instrument, textElement){
         var synth = T(instrument, {freq:midicps, mul:0.25}).play();
         break;
       case 'pluck':
-        var env = T("perc", {a:50, r:speed*10000/4});
+        var env = T("perc", {a:50, r:10000/(4*speed)});
         var synth = T("PluckGen", {env:env, mul:0.25}).play();
         break;
       case 'perc':
-        var synth = T("OscGen", {env:T("perc", {r:speed*10000/10, ar:true})}).play();
+        var synth = T("OscGen", {env:T("perc", {r:10000/(10*speed), ar:true})}).play();
         break;
       case 'synth-1':
         var osc = T("pulse");
-        var env = T("perc", {a:50, r:speed*10000/4});
+        var env = T("perc", {a:50, r:10000/(4*speed)});
         var synth = T("OscGen", {osc:osc, env:env, mul:0.15}).play();
         break;
       default:
@@ -141,7 +141,7 @@ function play(constant, base, map, speed, instrument, textElement){
   var status = {'playing': true};
 
   // Set interval to play our notes.
-  var interval = T("interval", {interval:speed*1000}, function(count) {
+  var interval = T("interval", {interval:1000/speed}, function(count) {
     //This is a infinite loop, in fact. So we return if not playing or
     //  if we count more than our notes length.
     if(!status['playing'] || count >= notes.length){
