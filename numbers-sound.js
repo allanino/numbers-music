@@ -99,6 +99,11 @@ function numberNotes(constant, base, map) {
 }
 
 function play(constant, base, map, speed, instrument, textElement){
+  // Resume AudioContext on user gesture if suspended
+  if (typeof T !== "undefined" && T.fn && T.fn._audioContext && T.fn._audioContext.state === "suspended") {
+    T.fn._audioContext.resume();
+  }
+
   // Get notes mapped from constant
   var number_notes = numberNotes(constant, base, map);
 
@@ -170,6 +175,10 @@ function play(constant, base, map, speed, instrument, textElement){
 // Just play a MIDI code note. Used by our little piano keyboards on setting
 // a mapping
 function playSample(note){
+  // Resume AudioContext on user gesture if suspended
+  if (typeof T !== "undefined" && T.fn && T.fn._audioContext && T.fn._audioContext.state === "suspended") {
+    T.fn._audioContext.resume();
+  }
   var env = T("perc", {a:50, r:2500});
   var synth = T("PluckGen", {env:env, mul:0.25}).play();
   synth.noteOn(note, 50);
